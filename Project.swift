@@ -6,5 +6,5 @@ import ProjectDescriptionHelpers
 let project = Project.app(
   name: "NaverMovie",
   platform: .iOS,
-  additionalTargets: []
+  additionalTargets: [.external(name: "RIBs")]
 )
