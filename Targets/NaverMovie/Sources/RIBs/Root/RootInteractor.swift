@@ -11,6 +11,7 @@ import RxSwift
 
 protocol RootRouting: ViewableRouting {
   // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+  func presentToSearch()
 }
 
 protocol RootPresentable: Presentable {
@@ -42,5 +43,10 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
   override func willResignActive() {
     super.willResignActive()
     // TODO: Pause any business logic.
+  }
+  
+  // MARK: - RootPresentableListener
+  func presentToSearch() {
+    router?.presentToSearch()
   }
 }
