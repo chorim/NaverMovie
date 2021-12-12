@@ -24,13 +24,11 @@ final class SearchViewController: UIViewController, SearchPresentable, SearchVie
   override func viewDidLoad() {
     super.viewDidLoad()
     title = "NAVER Movie"
-    
-    setupViews()
   }
   
   // MARK: - SearchPresentable
-  func setupViews() {
-    searchController = UISearchController(searchResultsController: UIViewController())
+  func setupViews(_ searchResultViewControllable: SearchResultViewControllable) {
+    searchController = UISearchController(searchResultsController: searchResultViewControllable.uiviewController)
     searchController?.searchBar.placeholder = "Search movies"
     //        searchController?.searchBar.delegate = self
     searchController?.automaticallyShowsCancelButton = true

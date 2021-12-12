@@ -8,14 +8,19 @@
 
 import RIBs
 
-protocol SearchDependency: Dependency {
-  // TODO: Declare the set of dependencies required by this RIB, but cannot be
-  // created by this RIB.
+protocol SearchDependency: Dependency, SearchResultDependency {
 }
 
 final class SearchComponent: Component<SearchDependency> {
-  
-  // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+//  var searchResultViewControllable: SearchResultViewControllable
+//
+//  init(
+//    dependency: SearchDependency,
+//    searchResultViewControllable: SearchResultViewControllable
+//  ) {
+//    self.searchResultViewControllable = searchResultViewControllable
+//    super.init(dependency: dependency)
+//  }
 }
 
 // MARK: - Builder
@@ -31,10 +36,16 @@ final class SearchBuilder: Builder<SearchDependency>, SearchBuildable {
   }
   
   func build(withListener listener: SearchListener) -> SearchRouting {
+    let searchResultRouter = SearchResultBuilder(dependency: dependency).build(withListener: listener)
+
     let component = SearchComponent(dependency: dependency)
     let viewController = SearchViewController()
     let interactor = SearchInteractor(presenter: viewController)
     interactor.listener = listener
-    return SearchRouter(interactor: interactor, viewController: viewController)
+    return SearchRouter(
+      interactor: interactor,
+      viewController: viewController,
+      searchResultRouter: searchResultRouter
+    )
   }
 }

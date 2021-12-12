@@ -15,11 +15,11 @@ protocol SearchRouting: ViewableRouting {
 
 protocol SearchPresentable: Presentable {
   var listener: SearchPresentableListener? { get set }
-  // TODO: Declare methods the interactor can invoke the presenter to present data.
-  func setupViews()
+  
+  func setupViews(_ searchResultViewControllable: SearchResultViewControllable)
 }
 
-protocol SearchListener: AnyObject {
+protocol SearchListener: SearchResultListener {
   // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
@@ -43,5 +43,9 @@ final class SearchInteractor: PresentableInteractor<SearchPresentable>, SearchIn
   override func willResignActive() {
     super.willResignActive()
     // TODO: Pause any business logic.
+  }
+  
+  func didAttachSearchResult(_ searchResultViewControllable: SearchResultViewControllable) {
+    presenter.setupViews(searchResultViewControllable)
   }
 }
